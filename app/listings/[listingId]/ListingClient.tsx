@@ -1,6 +1,4 @@
-// In summary, the ListingClient component displays detailed information about a listing, including its header, user information, description, and reservation section. Users can select a date range and create a reservation for the listing. The component takes into account disabled dates based on existing reservations and calculates the total price based on the selected date range. If the user is not logged in, clicking the "Reserve" button will open a login modal. After successfully creating a reservation, the user is redirected to the trips page.
-
-'use-client';
+'use client';
 
 import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -40,7 +38,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const loginModal = useLoginModal();
   const router = useRouter();
 
-  // Calculate disabled dates based on existing reservations
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
 
@@ -56,9 +53,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
     return dates;
   }, [reservations]);
 
-  // Determine the category of the listing
   const category = useMemo(() => {
-    return categories.find((items) => 
+     return categories.find((items) => 
       items.label === listing.category);
   }, [listing.category]);
 
@@ -66,30 +62,29 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
-  // Function to create a reservation
   const onCreateReservation = useCallback(() => {
-    if (!currentUser) {
-      return loginModal.onOpen();
-    }
-    setIsLoading(true);
+      if (!currentUser) {
+        return loginModal.onOpen();
+      }
+      setIsLoading(true);
 
-    axios.post('/api/reservations', {
-      totalPrice,
-      startDate: dateRange.startDate,
-      endDate: dateRange.endDate,
-      listingId: listing?.id
-    })
-    .then(() => {
-      toast.success('Listing reserved!');
-      setDateRange(initialDateRange);
-      router.push('/trips');
-    })
-    .catch(() => {
-      toast.error('Something went wrong.');
-    })
-    .finally(() => {
-      setIsLoading(false);
-    })
+      axios.post('/api/reservations', {
+        totalPrice,
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+        listingId: listing?.id
+      })
+      .then(() => {
+        toast.success('Listing reserved!');
+        setDateRange(initialDateRange);
+        router.push('/trips');
+      })
+      .catch(() => {
+        toast.error('Something went wrong.');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   },
   [
     totalPrice, 
@@ -100,7 +95,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
     loginModal
   ]);
 
-  // Update total price based on date range selection
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInDays(
@@ -125,7 +119,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
         "
       >
         <div className="flex flex-col gap-6">
-          {/* Display listing header */}
           <ListingHead
             title={listing.title}
             imageSrc={listing.imageSrc}
@@ -133,8 +126,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
             id={listing.id}
             currentUser={currentUser}
           />
-          
-          {/* Display listing information and reservation section */}
           <div 
             className="
               grid 
@@ -144,7 +135,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
               mt-6
             "
           >
-            {/* Display listing details */}
             <ListingInfo
               user={listing.user}
               category={category}
@@ -154,8 +144,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
               bathroomCount={listing.bathroomCount}
               locationValue={listing.locationValue}
             />
-
-            {/* Display reservation section */}
             <div 
               className="
                 order-first 
