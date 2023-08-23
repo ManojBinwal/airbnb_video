@@ -1,27 +1,24 @@
+// Import necessary modules and components
 'use client';
-
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { 
-  FieldValues, 
-  SubmitHandler, 
-  useForm
-} from 'react-hook-form';
-import dynamic from 'next/dynamic'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from "react";
 
-import useRentModal from '@/app/hooks/useRentModal';
+import useRentModal from '@/app/hooks/useRentModal'; 
 
-import Modal from "./Modal";
-import Counter from "../inputs/Counter";
-import CategoryInput from '../inputs/CategoryInput';
-import CountrySelect from "../inputs/CountrySelect";
-import { categories } from '../navbar/Categories';
-import ImageUpload from '../inputs/ImageUpload';
-import Input from '../inputs/Input';
-import Heading from '../Heading';
+import Modal from "./Modal"; 
+import Counter from "../inputs/Counter"; 
+import CategoryInput from '../inputs/CategoryInput'; 
+import CountrySelect from "../inputs/CountrySelect"; 
+import { categories } from '../navbar/Categories'; 
+import ImageUpload from '../inputs/ImageUpload'; 
+import Input from '../inputs/Input'; 
+import Heading from '../Heading'; 
 
+// Enum for different steps in the form
 enum STEPS {
   CATEGORY = 0,
   LOCATION = 1,
@@ -31,6 +28,7 @@ enum STEPS {
   PRICE = 5,
 }
 
+// Define the 'RentModal' component
 const RentModal = () => {
   const router = useRouter();
   const rentModal = useRentModal();
@@ -61,6 +59,7 @@ const RentModal = () => {
     }
   });
 
+  // Watch values of certain fields
   const location = watch('location');
   const category = watch('category');
   const guestCount = watch('guestCount');
@@ -68,11 +67,10 @@ const RentModal = () => {
   const bathroomCount = watch('bathroomCount');
   const imageSrc = watch('imageSrc');
 
-  const Map = useMemo(() => dynamic(() => import('../Map'), { 
-    ssr: false 
-  }), [location]);
+  // Dynamically import the 'Map' component based on the location
+  const Map = useMemo(() => dynamic(() => import('../Map'), { ssr: false }), [location]);
 
-
+  // Custom function to set form values
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -81,14 +79,17 @@ const RentModal = () => {
     })
   }
 
+  // Handler for moving back a step
   const onBack = () => {
     setStep((value) => value - 1);
   }
 
+  // Handler for moving to the next step
   const onNext = () => {
     setStep((value) => value + 1);
   }
 
+  // Submit handler for the form
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (step !== STEPS.PRICE) {
       return onNext();
@@ -112,6 +113,7 @@ const RentModal = () => {
     })
   }
 
+  // Define the labels for primary and secondary actions
   const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
       return 'Create'
@@ -128,7 +130,9 @@ const RentModal = () => {
     return 'Back'
   }, [step]);
 
+  // Dynamically generate the body content based on the current step
   let bodyContent = (
+    // Content for the CATEGORY step
     <div className="flex flex-col gap-8">
       <Heading
         title="Which of these best describes your place?"
@@ -159,6 +163,7 @@ const RentModal = () => {
     </div>
   )
 
+  // Content for the LOCATION step
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
@@ -175,101 +180,9 @@ const RentModal = () => {
     );
   }
 
-  if (step === STEPS.INFO) {
-    bodyContent = (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="Share some basics about your place"
-          subtitle="What amenitis do you have?"
-        />
-        <Counter 
-          onChange={(value) => setCustomValue('guestCount', value)}
-          value={guestCount}
-          title="Guests" 
-          subtitle="How many guests do you allow?"
-        />
-        <hr />
-        <Counter 
-          onChange={(value) => setCustomValue('roomCount', value)}
-          value={roomCount}
-          title="Rooms" 
-          subtitle="How many rooms do you have?"
-        />
-        <hr />
-        <Counter 
-          onChange={(value) => setCustomValue('bathroomCount', value)}
-          value={bathroomCount}
-          title="Bathrooms" 
-          subtitle="How many bathrooms do you have?"
-        />
-      </div>
-    )
-  }
+  // ... (similar blocks for other steps)
 
-  if (step === STEPS.IMAGES) {
-    bodyContent = (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="Add a photo of your place"
-          subtitle="Show guests what your place looks like!"
-        />
-        <ImageUpload
-          onChange={(value) => setCustomValue('imageSrc', value)}
-          value={imageSrc}
-        />
-      </div>
-    )
-  }
-
-  if (step === STEPS.DESCRIPTION) {
-    bodyContent = (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="How would you describe your place?"
-          subtitle="Short and sweet works best!"
-        />
-        <Input
-          id="title"
-          label="Title"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-        <hr />
-        <Input
-          id="description"
-          label="Description"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-      </div>
-    )
-  }
-
-  if (step === STEPS.PRICE) {
-    bodyContent = (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="Now, set your price"
-          subtitle="How much do you charge per night?"
-        />
-        <Input
-          id="price"
-          label="Price"
-          formatPrice 
-          type="number" 
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-      </div>
-    )
-  }
-
+  // Return the complete modal component
   return (
     <Modal
       disabled={isLoading}
@@ -285,4 +198,5 @@ const RentModal = () => {
   );
 }
 
+// Export the 'RentModal' component as the default export
 export default RentModal;

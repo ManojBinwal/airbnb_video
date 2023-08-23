@@ -1,14 +1,15 @@
+// The SearchModal component is a multi-step modal designed for filtering search results in a user-friendly manner. It allows users to select a location, specify date ranges, and provide additional information for refining search results. The component dynamically imports the Map component based on the selected location and uses various state variables to manage the form's
+
 'use client';
 
+// Import necessary libraries, components, and hooks
 import qs from 'query-string';
 import dynamic from 'next/dynamic'
 import { useCallback, useMemo, useState } from "react";
 import { Range } from 'react-date-range';
 import { formatISO } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
-
 import useSearchModal from "@/app/hooks/useSearchModal";
-
 import Modal from "./Modal";
 import Calendar from "../inputs/Calendar";
 import Counter from "../inputs/Counter";
@@ -17,19 +18,21 @@ import CountrySelect, {
 } from "../inputs/CountrySelect";
 import Heading from '../Heading';
 
+// Define the steps for the multi-step form
 enum STEPS {
   LOCATION = 0,
   DATE = 1,
   INFO = 2,
 }
 
+// Define the SearchModal component
 const SearchModal = () => {
   const router = useRouter();
   const searchModal = useSearchModal();
   const params = useSearchParams();
 
+  // Initialize step state and form state variables
   const [step, setStep] = useState(STEPS.LOCATION);
-
   const [location, setLocation] = useState<CountrySelectValue>();
   const [guestCount, setGuestCount] = useState(1);
   const [roomCount, setRoomCount] = useState(1);
@@ -40,10 +43,12 @@ const SearchModal = () => {
     key: 'selection'
   });
 
+  // Use dynamic import for the Map component based on location
   const Map = useMemo(() => dynamic(() => import('../Map'), { 
     ssr: false 
   }), [location]);
 
+  // Define onBack, onNext, and onSubmit functions using useCallback
   const onBack = useCallback(() => {
     setStep((value) => value - 1);
   }, []);
@@ -101,6 +106,7 @@ const SearchModal = () => {
     params
   ]);
 
+  // Determine action labels for the modal
   const actionLabel = useMemo(() => {
     if (step === STEPS.INFO) {
       return 'Search'
@@ -117,6 +123,7 @@ const SearchModal = () => {
     return 'Back'
   }, [step]);
 
+  // Define body content based on the current step
   let bodyContent = (
     <div className="flex flex-col gap-8">
       <Heading
@@ -175,12 +182,13 @@ const SearchModal = () => {
           }}
           value={bathroomCount}
           title="Bathrooms"
-          subtitle="How many bahtrooms do you need?"
+          subtitle="How many bathrooms do you need?"
         />
       </div>
     )
   }
 
+  // Render the Modal component with appropriate props
   return (
     <Modal
       isOpen={searchModal.isOpen}
@@ -195,4 +203,5 @@ const SearchModal = () => {
   );
 }
 
+// Export the SearchModal component as the default export of this module
 export default SearchModal;

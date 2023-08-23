@@ -1,13 +1,12 @@
-'use client';
+// In summary, the ListingReservation component takes in various props related to the reservation, such as the nightly price, date range, total price, and functions to handle date changes and submission. It displays this information along with a date picker and a "Reserve" button. The component provides a visually organized way for users to view reservation details and make a booking.
 
 import { Range } from "react-date-range";
-
 import Button from "../Button";
 import Calendar from "../inputs/Calendar";
 
 interface ListingReservationProps {
   price: number;
-  dateRange: Range,
+  dateRange: Range;
   totalPrice: number;
   onChangeDate: (value: Range) => void;
   onSubmit: () => void;
@@ -29,15 +28,15 @@ const ListingReservation: React.FC<
   return ( 
     <div 
       className="
-      bg-white 
+        bg-white 
         rounded-xl 
         border-[1px]
-      border-neutral-200 
+        border-neutral-200 
         overflow-hidden
       "
     >
-      <div className="
-      flex flex-row items-center gap-1 p-4">
+      {/* Display the nightly price */}
+      <div className="flex flex-row items-center gap-1 p-4">
         <div className="text-2xl font-semibold">
           $ {price}
         </div>
@@ -46,6 +45,8 @@ const ListingReservation: React.FC<
         </div>
       </div>
       <hr />
+
+      {/* Display the date picker component */}
       <Calendar
         value={dateRange}
         disabledDates={disabledDates}
@@ -53,6 +54,8 @@ const ListingReservation: React.FC<
           onChangeDate(value.selection)}
       />
       <hr />
+
+      {/* Display the 'Reserve' button */}
       <div className="p-4">
         <Button 
           disabled={disabled} 
@@ -61,6 +64,8 @@ const ListingReservation: React.FC<
         />
       </div>
       <hr />
+
+      {/* Display the total price */}
       <div 
         className="
           p-4 

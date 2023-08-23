@@ -1,3 +1,5 @@
+// In summary, the CategoryView component takes in three props: icon, label, and description. It renders these props in a flex container, with the provided icon displayed at the left, the label in a larger and bold font, and the description in a lighter font. This component is versatile and can be used to create a consistent and visually appealing layout for displaying various categories or features in your application.
+
 'use client';
 
 import { IconType } from "react-icons";

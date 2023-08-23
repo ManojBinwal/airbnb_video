@@ -1,25 +1,27 @@
 'use client';
-
+// Import necessary modules and components.
 import { IconType } from "react-icons";
 
+// Define the props interface to specify the expected properties of the Button component.
 interface ButtonProps {
-  label: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  disabled?: boolean;
-  outline?: boolean;
-  small?: boolean;
-  icon?: IconType;
+  label: string; // Label text for the button.
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void; // Function to call when the button is clicked.
+  disabled?: boolean; // Whether the button is disabled.
+  outline?: boolean; // Whether the button has an outline style.
+  small?: boolean; // Whether to use a smaller button size.
+  icon?: IconType; // Icon component (from react-icons) to be displayed before the label.
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-  label, 
-  onClick, 
-  disabled, 
+// Define the Button component using the functional component syntax.
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  disabled,
   outline,
   small,
   icon: Icon,
 }) => {
-  return ( 
+  return (
     <button
       disabled={disabled}
       onClick={onClick}
@@ -40,6 +42,7 @@ const Button: React.FC<ButtonProps> = ({
         ${small ? 'border-[1px]' : 'border-2'}
       `}
     >
+      {/* ---- Icon (if provided) ---- */}
       {Icon && (
         <Icon
           size={24}
@@ -50,9 +53,11 @@ const Button: React.FC<ButtonProps> = ({
           "
         />
       )}
+      {/* Button label */}
       {label}
     </button>
-   );
+  );
 }
- 
+
+// Export the Button component as the default export of the module.
 export default Button;

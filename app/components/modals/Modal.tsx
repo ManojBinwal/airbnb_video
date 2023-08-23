@@ -1,89 +1,99 @@
 'use client';
-
+// Import necessary modules and components.
 import { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
-import Button from "../Button";
+import Button from "../Button"; 
 
+// Define the props interface to specify the expected properties of the Modal component.
 interface ModalProps {
-  isOpen?: boolean;
-  onClose: () => void;
-  onSubmit: () => void;
-  title?: string;
-  body?: React.ReactElement;
-  footer?: React.ReactElement;
-  actionLabel: string;
-  disabled?: boolean;
-  secondaryAction?: () => void;
-  secondaryActionLabel?: string;
+  isOpen?: boolean; // Whether the modal is open or not.
+  onClose: () => void; // Function to call when the modal is closed.
+  onSubmit: () => void; // Function to call when the main action button is clicked.
+  title?: string; // Title of the modal.
+  body?: React.ReactElement; // Content to display in the modal body.
+  footer?: React.ReactElement; // Additional content to display in the modal footer.
+  actionLabel: string; // Label for the main action button.
+  disabled?: boolean; // Whether the main action button is disabled.
+  secondaryAction?: () => void; // Function to call when the secondary action button is clicked.
+  secondaryActionLabel?: string; // Label for the secondary action button.
 }
 
-const Modal: React.FC<ModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  onSubmit, 
-  title, 
-  body, 
-  actionLabel, 
-  footer, 
+// Define the Modal component using the functional component syntax.
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  title,
+  body,
+  actionLabel,
+  footer,
   disabled,
   secondaryAction,
-  secondaryActionLabel
+  secondaryActionLabel,
 }) => {
+  // State to control the visibility of the modal.
   const [showModal, setShowModal] = useState(isOpen);
 
+  // Use useEffect to update the showModal state when isOpen changes.
   useEffect(() => {
     setShowModal(isOpen);
   }, [isOpen]);
 
+  // ---- Callback Functions ----
+  
+  // Callback function to handle modal close.
   const handleClose = useCallback(() => {
     if (disabled) {
-      return;
+      return; // If disabled, don't perform any action.
     }
-  
-    setShowModal(false);
+    setShowModal(false); // Hide the modal with an animation.
     setTimeout(() => {
-      onClose();
-    }, 300)
+      onClose(); // Call the provided onClose function after a delay.
+    }, 300); // Delay before calling the onClose function.
   }, [onClose, disabled]);
 
+  // Callback function to handle main action button click.
   const handleSubmit = useCallback(() => {
     if (disabled) {
-      return;
+      return; // If disabled, don't perform any action.
     }
-
-    onSubmit();
+    onSubmit(); // Call the provided onSubmit function.
   }, [onSubmit, disabled]);
 
+  // Callback function to handle secondary action button click.
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
-      return;
+      return; // If disabled or no secondaryAction, don't perform any action.
     }
-
-    secondaryAction();
+    secondaryAction(); // Call the provided secondaryAction function.
   }, [secondaryAction, disabled]);
 
+  // ---- Rendering ----
+
+  // If the modal is not open, return null to prevent rendering.
   if (!isOpen) {
     return null;
   }
 
+  // ---- Modal Rendering ----
+  
+  // Render the modal content.
   return (
     <>
-      <div
-        className="
-          justify-center 
-          items-center 
-          flex 
-          overflow-x-hidden 
-          overflow-y-auto 
-          fixed 
-          inset-0 
-          z-50 
-          outline-none 
-          focus:outline-none
-          bg-neutral-800/70
-        "
-      >
+      <div className="
+        justify-center 
+        items-center 
+        flex 
+        overflow-x-hidden 
+        overflow-y-auto 
+        fixed 
+        inset-0 
+        z-50 
+        outline-none 
+        focus:outline-none
+        bg-neutral-800/70
+      ">
         <div className="
           relative 
           w-full
@@ -95,9 +105,10 @@ const Modal: React.FC<ModalProps> = ({
           h-full 
           lg:h-auto
           md:h-auto
-          "
-        >
-          {/*content*/}
+        ">
+          {/* ---- Modal Content ---- */}
+
+          {/* {adding animation on open and close} */}
           <div className={`
             translate
             duration-300
@@ -120,9 +131,8 @@ const Modal: React.FC<ModalProps> = ({
               bg-white 
               outline-none 
               focus:outline-none
-            "
-            >
-              {/*header*/}
+            ">
+              {/* ---- Modal Header ---- */}
               <div className="
                 flex 
                 items-center 
@@ -131,8 +141,8 @@ const Modal: React.FC<ModalProps> = ({
                 justify-center
                 relative
                 border-b-[1px]
-                "
-              >
+              ">
+                {/* Close button */}
                 <button
                   className="
                     p-1
@@ -146,15 +156,16 @@ const Modal: React.FC<ModalProps> = ({
                 >
                   <IoMdClose size={18} />
                 </button>
+                {/* Title */}
                 <div className="text-lg font-semibold">
                   {title}
                 </div>
               </div>
-              {/*body*/}
+              {/* ---- Modal Body ---- */}
               <div className="relative p-6 flex-auto">
                 {body}
               </div>
-              {/*footer*/}
+              {/* ---- Modal Footer ---- */}
               <div className="flex flex-col gap-2 p-6">
                 <div 
                   className="
@@ -165,6 +176,7 @@ const Modal: React.FC<ModalProps> = ({
                     w-full
                   "
                 >
+                  {/* Secondary action button */}
                   {secondaryAction && secondaryActionLabel && (
                     <Button 
                       disabled={disabled} 
@@ -173,12 +185,14 @@ const Modal: React.FC<ModalProps> = ({
                       outline
                     />  
                   )}
+                  {/* Main action button */}
                   <Button 
                     disabled={disabled} 
                     label={actionLabel} 
                     onClick={handleSubmit}
                   />
                 </div>
+                {/* Additional footer content */}
                 {footer}
               </div>
             </div>
@@ -189,4 +203,5 @@ const Modal: React.FC<ModalProps> = ({
   );
 }
 
+// Export the Modal component as the default export of the module.
 export default Modal;

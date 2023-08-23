@@ -1,5 +1,5 @@
 'use client';
-
+// Import necessary modules and components
 import { 
   FieldErrors, 
   FieldValues, 
@@ -7,17 +7,19 @@ import {
 } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
 
+// Define the properties that the Input component can accept
 interface InputProps {
-  id: string;
-  label: string;
-  type?: string;
-  disabled?: boolean;
-  formatPrice?: boolean;
-  required?: boolean;
-  register: UseFormRegister<FieldValues>,
-  errors: FieldErrors
+  id: string; // The HTML 'id' attribute for the input element.
+  label: string; // The label text for the input.
+  type?: string; // Optional: The input type (default is "text").
+  disabled?: boolean; // Optional: Whether the input is disabled.
+  formatPrice?: boolean; // Optional: Whether to show a dollar icon for price formatting.
+  required?: boolean; // Optional: Whether the input is required.
+  register: UseFormRegister<FieldValues>; // React Hook Form's register function.
+  errors: FieldErrors; // React Hook Form's error object.
 }
 
+// Define the Input component using the functional component syntax.
 const Input: React.FC<InputProps> = ({
   id,
   label,
@@ -30,6 +32,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div className="w-full relative">
+      {/* Show a dollar icon if 'formatPrice' prop is true */}
       {formatPrice && (
         <BiDollar
           size={24}  
@@ -41,9 +44,11 @@ const Input: React.FC<InputProps> = ({
           "
         />
       )}
+      {/* Input element */}
       <input
         id={id}
         disabled={disabled}
+        // Register the input with React Hook Form and set 'required' validation if needed
         {...register(id, { required })}
         placeholder=" "
         type={type}
@@ -65,6 +70,7 @@ const Input: React.FC<InputProps> = ({
           ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
         `}
       />
+      {/* Label element */}
       <label 
         className={`
           absolute 
@@ -86,7 +92,8 @@ const Input: React.FC<InputProps> = ({
         {label}
       </label>
     </div>
-   );
+  );
 }
- 
+
+// Export the Input component as the default export of the module.
 export default Input;

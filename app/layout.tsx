@@ -1,3 +1,4 @@
+//import font from next js
 import { Nunito } from 'next/font/google'
 
 import Navbar from '@/app/components/navbar/Navbar';
@@ -12,11 +13,13 @@ import './globals.css'
 import ClientOnly from './components/ClientOnly';
 import getCurrentUser from './actions/getCurrentUser';
 
+//create metadata for webpage
 export const metadata = {
   title: 'Airbnb',
   description: 'Airbnb Clone',
 }
 
+//create variable for  font that exposes a classname which we can give to our body element
 const font = Nunito({ 
   subsets: ['latin'], 
 });
@@ -30,7 +33,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      {/* {apply font to the body} */}
       <body className={font.className}>
+        {/* {wrap inside client component to prevent hydration error} */}
         <ClientOnly>
           <ToasterProvider />
           <LoginModal />

@@ -1,3 +1,9 @@
+//In this code, the ReservationsPage component first fetches the current user using the getCurrentUser function. If there is no authenticated user, it renders an unauthorized empty state message within the ClientOnly component.
+
+// If there is an authenticated user, it fetches reservations using the getReservations function with the authorId parameter set to the current user's ID. If there are no reservations, it renders an empty state message indicating that there are no reservations.
+
+// If there are reservations, it renders the TripsClient component and passes the reservations and current user as props.
+
 
 import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "@/app/components/ClientOnly";

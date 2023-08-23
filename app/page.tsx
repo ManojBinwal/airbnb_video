@@ -1,29 +1,37 @@
+//In summary, the Home component fetches listings and the current user's information, then dynamically renders listing cards using the fetched data. It utilizes the ListingCard component to display each listing's details. If there are no listings to display, an EmptyState component is rendered. The grid layout adapts responsively to different screen sizes. Additionally, the ClientOnly component ensures that the rendering occurs on the client side, which can be important for components that depend on browser-specific functionality.
+
 import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
 import EmptyState from "@/app/components/EmptyState";
 
-import getListings, { 
-  IListingsParams
-} from "@/app/actions/getListings";
+// Importing functions to fetch data
+import getListings, { IListingsParams } from "@/app/actions/getListings";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+
+// Importing a component to ensure client-side rendering
 import ClientOnly from "./components/ClientOnly";
 
+// Defining the props that the Home component accepts
 interface HomeProps {
-  searchParams: IListingsParams
-};
+  searchParams: IListingsParams; // Parameters for fetching listings
+}
 
+// The actual Home component
 const Home = async ({ searchParams }: HomeProps) => {
+  // Fetching listings and current user information
   const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
 
+  // Handling the case where there are no listings to display
   if (listings.length === 0) {
     return (
-      <ClientOnly>
-        <EmptyState showReset />
+      <ClientOnly> {/* Ensuring client-side rendering */}
+        <EmptyState showReset /> {/* Showing an empty state component */}
       </ClientOnly>
     );
   }
 
+  // Rendering the listings in a grid layout
   return (
     <ClientOnly>
       <Container>

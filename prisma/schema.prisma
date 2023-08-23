@@ -1,19 +1,23 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// This is your Prisma schema file,
+//This Prisma schema serves as a blueprint for creating the database structure, relationships, and constraints for your application. It's a key part of Prisma's functionality in generating a database client that provides a type-safe interface to interact with your database.
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Generator configuration for Prisma client.
 generator client {
   provider = "prisma-client-js"
 }
 
+// Datasource configuration for MongoDB.
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+// Definition of the "User" model.
 model User {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
   name            String?
-  email           String?   @unique
+  email           String?  @unique
   emailVerified   DateTime?
   image           String?
   hashedPassword  String?
@@ -21,57 +25,65 @@ model User {
   updatedAt       DateTime @updatedAt
   favoriteIds     String[] @db.ObjectId
 
-  accounts Account[]
-  listings Listing[]
-  reservations Reservation[]
+  // Relationships
+  accounts        Account[]
+  listings        Listing[]
+  reservations    Reservation[]
 }
 
+// Definition of the "Account" model.
 model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.String
-  access_token       String?  @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.String
-  session_state      String?
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String   @db.ObjectId
+  type             String
+  provider         String
+  providerAccountId String
+  refresh_token    String?  @db.String
+  access_token     String?  @db.String
+  expires_at       Int?
+  token_type       String?
+  scope            String?
+  id_token         String?  @db.String
+  session_state    String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relationship
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // Unique constraint
   @@unique([provider, providerAccountId])
 }
 
+// Definition of the "Listing" model.
 model Listing {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  description String
-  imageSrc String
-  createdAt DateTime @default(now())
-  category  String
-  roomCount Int
-  bathroomCount Int
-  guestCount Int
-  locationValue String
-  userId String @db.ObjectId
-  price Int
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  description    String
+  imageSrc       String
+  createdAt      DateTime @default(now())
+  category       String
+  roomCount      Int
+  bathroomCount  Int
+  guestCount     Int
+  locationValue  String
+  userId         String   @db.ObjectId
+  price          Int
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  reservations Reservation[]
+  // Relationship
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations   Reservation[]
 }
 
+// Definition of the "Reservation" model.
 model Reservation {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  listingId String @db.ObjectId  
-  startDate DateTime
-  endDate DateTime
-  totalPrice Int
-  createdAt DateTime @default(now())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  listingId    String   @db.ObjectId  
+  startDate    DateTime
+  endDate      DateTime
+  totalPrice   Int
+  createdAt    DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  // Relationships
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing      Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }

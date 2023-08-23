@@ -1,0 +1,239 @@
+## Install next js
+
+npx create-next-app --typescript
+
+name your project
+enlsit yes
+src no 
+app router yes
+typescript yes
+
+npm run dev //to run the project
+
+
+## Install Tailwind css
+
+npm install -D tailwindcss postcss a autoprefixer
+
+npx tailwindcss init -p
+
+configure tailwind.css file 
+
+add tailwind directives 
+
+npm run dev
+
+## install react icons
+
+npm install react-icons
+
+## install axios
+    npm install axios
+
+## install react-hook-form 
+    npm install react-hook-form
+
+## install Zustand 
+    npm install zustand
+
+## install react-hot-toast
+    npm install react-hot-toast
+
+## install prisma 
+    npm install -D primsma
+    npx prisma init
+
+## install next auth 
+    npm install next-auth @prisma/client @next-auth/prisma-adapter
+
+## install bcrypt
+    npm install bcrypt
+    npm -D @types/bcrypt
+
+## install Query string
+    npm install query-string
+
+## install world countries
+    npm install world-countries
+
+## install react - select
+    npm install react-select
+
+## install leaflet 
+    npm install -D @types/leaflet
+
+## install cloudinary
+    npm install next-cloudinary
+
+## install react-date-range
+    npm install react-date-range
+    npm i -D @types/react-date-range
+
+
+
+## Hydration error
+    create clientonly.tsx file inside component 
+    wrap components inside layout file inside the clientonly component
+
+
+
+    -----------------------------------------------------------------------------------------------------------------------------
+
+## Creating  Navbar
+
+   <-> create a navbar.tsx file inside app / component /navbar  or anywhere you want 
+
+   <-> import the navbar in your layout file
+        !div- to render top nav bar
+            !div - div to contain container
+                !container -
+                    !div - to apply flex
+                        ! Logo
+                        ! search
+                        !usermenu
+            categories
+
+   <->  create a container file in component folder
+
+   <->create logo component inside nabar folder
+
+   <-> create search component
+        div - to apply click
+            div - to apply flex
+                div- location label 
+                div- duration label
+                div- guest label
+                div - icon
+
+    <-> create Usermenu component inside navbar
+        !div - apply relative property
+            !div - apply flex
+                !div - render Airbnb your home
+                !<AiOutlineMenu> - render menu icon and avatar
+                    !div - render user avatar
+        !div - render dropdown menu 
+    
+            !div - flex
+                (if logged in )
+                !<MenuItem> - my trips
+                !<menuItem> - my fav
+                !<menuItem> - my reservations
+                !<menuItem> - my properties
+                !<menuItem> -airbnb
+                !<menuItem> -logout
+
+                (if logged out )
+                !<menuItem> -login
+                !<menuItem> -sign up
+
+    <->create menuIten.tsx
+        create interface - onclick,label  
+        return div - styles for menuItem
+            div returns label prop
+        
+
+
+    <-> create state and toggle function
+        !- initialise state
+        !- define function to toggle
+        !- set the toggle function on the div containing Usermenu
+        !- create function to render menuItems when isopen 
+
+
+
+        ## Register Modal
+            !-create Modal.tsx
+            !-state to open/ close 
+            !-function to close
+            !-handlesubmit (main action)
+            !-handle secondary action
+            !-rendering - if not open return null
+            !-Modal rendering
+                <>
+                    <div>
+                        <div>
+                            <div>
+                                <div>
+                                    <div>
+                                        <closebutton>
+                                        <logo>
+                                        <body>
+                                        <footer>
+                                            <secondaryActionButton>
+                                            <mainactionButton>
+                                            <footercontent>
+
+
+            ## Button.tsx
+                define button props and style button 
+
+
+            ## create hooks folder inside app folder
+                create UseRegisterModal.ts
+                    create a custom hook to open/close modal using create from zustand
+
+            ## create Heading.tsx
+
+            ## create inputs folder inside component
+                create Input.tsx
+
+            ## create toaster provider
+
+            ## configure prisma 
+                !- configure prisma schema 
+                !- configure env
+                !- npx prisma db push
+
+            ## create db database and link it
+
+            ## create github Oauth and get client id and secret
+            ## get google client id and secret
+
+
+
+
+            
+
+## create app/libs/prismadb.ts
+
+## create pages/api/auth/[...nextauth].ts
+    !- google provider
+    !- github provider 
+    !- credential provider
+        !- authorise credentials
+            !- if user/pass mismatch throw error
+            !- correct password compare using bcrypt
+                !- if not throw error
+    !- if there is any error redirect to auth page
+
+## create app/api/register/route.ts
+
+        ## create LoginModal.ts
+            validate login credentials
+
+
+## create app/actions/getCurrentUser.ts
+
+## create app/types/index.ts
+    !- santise the dangerous formats like date/time which cannot be directly passed to the client component
+
+
+  
+      
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+## create categories
+    ## create categories.tsx inside navbar folder
+    ##create categoryBox
+    
+## create Rent Modal
+    ##create RentModal.tsx inside modals - to list your place
+        ##create step 1 - select category
+        ##create step 2 - select location
+            - use select and world countries for countries list
+            - use leaflet for map
+                -map.tsx
+            
+

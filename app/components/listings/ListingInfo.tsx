@@ -1,29 +1,28 @@
-'use client';
+// In summary, the ListingInfo component takes in several props related to listing information and displays them in a structured manner. It also dynamically imports the Map component using next/dynamic for client-side rendering. The component includes details about the host, property, category, description, and a map with a marker at the specified location.
 
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
-
 import useCountries from "@/app/hooks/useCountries";
 import { SafeUser } from "@/app/types";
-
 import Avatar from "../Avatar";
 import ListingCategory from "./ListingCategory";
 
+// Dynamically import the Map component with client-side rendering
 const Map = dynamic(() => import('../Map'), { 
   ssr: false 
 });
 
 interface ListingInfoProps {
-  user: SafeUser,
+  user: SafeUser;
   description: string;
   guestCount: number;
   roomCount: number;
   bathroomCount: number;
   category: {
-    icon: IconType,
+    icon: IconType;
     label: string;
     description: string;
-  } | undefined
+  } | undefined;
   locationValue: string;
 }
 
@@ -38,7 +37,8 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
 }) => {
   const { getByValue } = useCountries();
 
-  const coordinates = getByValue(locationValue)?.latlng
+  // Get the coordinates for the given location value
+  const coordinates = getByValue(locationValue)?.latlng;
 
   return ( 
     <div className="col-span-4 flex flex-col gap-8">
@@ -80,8 +80,8 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
       {category && (
         <ListingCategory
           icon={category.icon} 
-          label={category?.label}
-          description={category?.description} 
+          label={category.label}
+          description={category.description} 
         />
       )}
       <hr />
@@ -90,6 +90,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
         {description}
       </div>
       <hr />
+      {/* Render the Map component with coordinates */}
       <Map center={coordinates} />
     </div>
    );

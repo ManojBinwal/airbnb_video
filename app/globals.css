@@ -1,7 +1,9 @@
+/* adding tailwind directive to your css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* css reset */
 html,
 body,
 :root {

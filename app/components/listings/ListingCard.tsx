@@ -1,31 +1,34 @@
+//In summary, the ListingCard component displays information about a listing, including its image, location, category, price, and an optional action button. It provides interactivity by allowing users to click on the card to navigate to the listing's details page and to favorite listings. The component is highly customizable through its props and provides a visually appealing and functional way to display and interact with listings.
+
 'use client';
 
+// Importing necessary dependencies
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from 'date-fns';
 
+// Importing hooks and types
 import useCountries from "@/app/hooks/useCountries";
-import { 
-  SafeListing, 
-  SafeReservation, 
-  SafeUser 
-} from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
+// Importing custom components
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 import ClientOnly from "../ClientOnly";
 
+// Defining the props that the ListingCard component accepts
 interface ListingCardProps {
-  data: SafeListing;
-  reservation?: SafeReservation;
-  onAction?: (id: string) => void;
-  disabled?: boolean;
-  actionLabel?: string;
-  actionId?: string;
-  currentUser?: SafeUser | null
+  data: SafeListing;  // Listing details
+  reservation?: SafeReservation;  // Reservation details
+  onAction?: (id: string) => void;  // Action handler
+  disabled?: boolean;  // Whether the action button is disabled
+  actionLabel?: string;  // Label for the action button
+  actionId?: string;  // Action ID
+  currentUser?: SafeUser | null;  // Current user's information
 };
 
+// The actual ListingCard component
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
   reservation,
@@ -38,19 +41,24 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const router = useRouter();
   const { getByValue } = useCountries();
 
+  // Getting location information using the useCountries hook
   const location = getByValue(data.locationValue);
 
+  // Handling the action button's click event
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+      e.stopPropagation();
 
-    if (disabled) {
-      return;
-    }
+      if (disabled) {
+        return;
+      }
 
-    onAction?.(actionId)
-  }, [disabled, onAction, actionId]);
+      onAction?.(actionId);
+    },
+    [disabled, onAction, actionId]
+  );
 
+  // Calculating the displayed price based on reservation or listing data
   const price = useMemo(() => {
     if (reservation) {
       return reservation.totalPrice;
@@ -59,6 +67,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     return data.price;
   }, [reservation, data.price]);
 
+  // Calculating and formatting the reservation date range
   const reservationDate = useMemo(() => {
     if (!reservation) {
       return null;
