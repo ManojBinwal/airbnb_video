@@ -1,10 +1,4 @@
-// In this code, the PropertiesClient component receives the user's listings and the current user's information as props. It uses the useState hook to keep track of the ID of the property being deleted. The onDelete function is a callback that handles the deletion of a property. When a user clicks the "Delete" button on a property card, this function is called. It sends a DELETE request to the server to delete the property using the Axios library.
-
-// The ListingCard component is used to display each property. It provides a delete action that triggers the onDelete function when clicked. The disabled property is used to prevent multiple delete requests while one is already in progress.
-
-// Overall, the PropertiesClient component provides a user-friendly interface for managing and deleting properties.
-
-'use-client';
+'use client';
 
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -29,7 +23,6 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
   const router = useRouter();
   const [deletingId, setDeletingId] = useState('');
 
-  // Function to handle property deletion
   const onDelete = useCallback((id: string) => {
     setDeletingId(id);
 
@@ -45,6 +38,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
       setDeletingId('');
     })
   }, [router]);
+
 
   return ( 
     <Container>
