@@ -4,7 +4,6 @@
 
 // This hook provides an easy way to handle the favorite feature while abstracting away the API requests and interactions with the login modal. It encapsulates the functionality in a reusable and self-contained manner.
 
-'use-client';
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";

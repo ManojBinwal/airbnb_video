@@ -1,6 +1,7 @@
 // Overall Purpose: This code defines a React component for a login modal. It uses several imported components and hooks to manage user login and display the modal.
 
 // Importing required modules and dependencies.
+
 'use client';
 
 import { useCallback, useState } from "react";

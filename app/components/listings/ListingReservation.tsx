@@ -1,4 +1,5 @@
 // In summary, the ListingReservation component takes in various props related to the reservation, such as the nightly price, date range, total price, and functions to handle date changes and submission. It displays this information along with a date picker and a "Reserve" button. The component provides a visually organized way for users to view reservation details and make a booking.
+
 'use-client';
 
 import { Range } from "react-date-range";
