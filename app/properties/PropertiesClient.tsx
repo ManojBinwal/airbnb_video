@@ -4,6 +4,8 @@
 
 // Overall, the PropertiesClient component provides a user-friendly interface for managing and deleting properties.
 
+'use-client';
+
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useCallback, useState } from "react";
