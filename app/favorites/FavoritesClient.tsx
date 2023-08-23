@@ -1,6 +1,7 @@
 // This code snippet defines a React functional component named FavoritesClient that is responsible for rendering a list of favorite listings. The component receives an array of SafeListing objects and the current user's information (SafeUser), and it displays these listings using the ListingCard component.
 
 // In summary, the FavoritesClient component receives an array of favorite listings and the current user's information. It displays a heading indicating that these are the user's favorites, and then it maps through the array of listings and renders a ListingCard component for each listing. This component provides a structured way to display a user's favorite listings in a consistent and visually appealing manner.
+'use-client';
 
 import { SafeListing, SafeUser } from "@/app/types";
 

@@ -1,4 +1,5 @@
 // In summary, the ListingInfo component takes in several props related to listing information and displays them in a structured manner. It also dynamically imports the Map component using next/dynamic for client-side rendering. The component includes details about the host, property, category, description, and a map with a marker at the specified location.
+'use-client';
 
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";

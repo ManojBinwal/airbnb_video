@@ -1,4 +1,5 @@
 //In summary, the Home component fetches listings and the current user's information, then dynamically renders listing cards using the fetched data. It utilizes the ListingCard component to display each listing's details. If there are no listings to display, an EmptyState component is rendered. The grid layout adapts responsively to different screen sizes. Additionally, the ClientOnly component ensures that the rendering occurs on the client side, which can be important for components that depend on browser-specific functionality.
+'use-client';
 
 import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";

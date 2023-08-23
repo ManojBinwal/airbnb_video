@@ -1,4 +1,5 @@
 // In summary, the getReservations function fetches reservations from the database using the Prisma client. It constructs a query based on the provided parameters, including filtering by listing ID, user ID, and author ID. The function also ensures that relevant date fields, including createdAt, startDate, and endDate, are converted to ISO strings for consistent formatting. If there's any issue during the process, the function throws an error.
+'use-client';
 
 import prisma from "@/app/libs/prismadb"; // Importing the Prisma client instance
 

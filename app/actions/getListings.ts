@@ -1,5 +1,7 @@
 // In summary, the getListings function fetches listings from the database using the Prisma client. It constructs a query based on the provided parameters, including filtering by user ID, room count, guest count, bathroom count, location value, category, and reservations' date ranges. The function also ensures that the createdAt field of each listing is converted to an ISO string for consistent formatting. If there's any issue during the process, the function throws an error.
 
+'use-client';
+
 import prisma from "@/app/libs/prismadb"; // Importing the Prisma client instance
 
 export interface IListingsParams {

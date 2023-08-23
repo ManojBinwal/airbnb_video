@@ -2,6 +2,7 @@
 
 //In summary, the getFavoriteListings function uses the Prisma client to query the database for the user's favorite listings. It retrieves the current user's information using the getCurrentUser function and then uses the user's favoriteIds to filter the favorite listings. The function also ensures that the createdAt field of each favorite listing is converted to a string for consistent formatting. If there's any issue during the process, the function throws an error.
 
+'use-client';
 
 import prisma from "@/app/libs/prismadb"; // Importing the Prisma client instance
 import getCurrentUser from "./getCurrentUser"; // Importing the getCurrentUser function

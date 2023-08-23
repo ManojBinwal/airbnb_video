@@ -8,8 +8,9 @@
     // They create a new array of favoriteIds that includes the favorited listing ID (for POST) or removes the unfavorited listing ID (for DELETE).
     // They update the user's data in the database with the new favoriteIds array.
     // They return a JSON response with the updated user data.
-    
+
 // These functions are meant to be used as serverless API endpoints to handle favoriting and unfavoriting listings for a user.
+
 
 import { NextResponse } from "next/server";
 

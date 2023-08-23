@@ -1,6 +1,7 @@
 // This code snippet defines a React functional component named ListingPage that is responsible for rendering the user's favorite listings page. The component fetches the user's favorite listings using the getFavoriteListings action and retrieves the current user's information using the getCurrentUser action. It then conditionally renders either the FavoritesClient component or an EmptyState component, based on whether the user has any favorite listings.
 
 //In summary, the ListingPage component fetches the user's favorite listings and the current user's information using the respective actions. It then conditionally renders either the FavoritesClient component, which displays the user's favorite listings, or an EmptyState component with a message indicating that the user has no favorite listings. This component provides a structured way to present the user's favorite listings in a visually appealing manner and provide feedback when there are no favorites to display. The ClientOnly component is used to ensure that the components are only rendered on the client side to avoid potential issues during server-side rendering.
+'use-client';
 
 import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "@/app/components/ClientOnly";

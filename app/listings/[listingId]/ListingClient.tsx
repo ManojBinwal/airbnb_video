@@ -1,5 +1,7 @@
 // In summary, the ListingClient component displays detailed information about a listing, including its header, user information, description, and reservation section. Users can select a date range and create a reservation for the listing. The component takes into account disabled dates based on existing reservations and calculates the total price based on the selected date range. If the user is not logged in, clicking the "Reserve" button will open a login modal. After successfully creating a reservation, the user is redirected to the trips page.
 
+'use-client';
+
 import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";

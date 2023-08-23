@@ -1,4 +1,5 @@
 // In summary, the getListingById function fetches a specific listing by its ID using the Prisma client. It also includes additional details about the associated user of the listing, such as their createdAt, updatedAt, and emailVerified fields. The function ensures that the date and boolean values are consistently formatted as strings. If there's any issue during the process, the function throws an error.
+'use-client';
 
 import prisma from "@/app/libs/prismadb"; // Importing the Prisma client instance
 
